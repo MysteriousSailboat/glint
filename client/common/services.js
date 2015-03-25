@@ -135,3 +135,33 @@ glintServices.factory('Comments', function ($http){
   };
 });
 
+glintServices.factory('Boards', function ($http){
+
+  var getBoards = function (){
+    return $http({
+      method: 'GET',
+      url: '/api/boards'
+    }).then(function (response){
+      return response.data;
+    }).catch(function (error) {
+      console.error('getBoards error', error);
+    });
+  };
+
+  var createBoard = function (board){
+    return $http({
+      method: 'POST',
+      url: '/api/boards',
+      data: board
+    }).then(function (response){
+      return response.data;
+    }).catch(function (error) {
+      console.error('createBoard error', error);
+    });
+  };
+
+  return {
+    getBoards: getBoards,
+    createBoard: createBoard
+  };
+});
