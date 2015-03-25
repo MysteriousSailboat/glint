@@ -2,6 +2,7 @@
 
 #.gitignore
 .DS_Store
+node_modules
 
 # Logs
 logs
@@ -36,3 +37,5 @@ client/bower_components/
 # Just Azure Things
 azure.err
 *.publishsettings
+
+
