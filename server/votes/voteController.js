@@ -28,8 +28,10 @@ var updateVoteCount = function(req, res, changeValue) {
   var updateVotes = Q.nbind(Idea.findOneAndUpdate, Idea);
 
   var query = { title: req.body.title };
-    
-  updateVotes(query, { $inc: { votes: changeValue } })
+  var dateTime = Date();
+  console.log(dateTime);
+  updateVotes(query, { $inc: { votes: changeValue,
+    time: dateTime } })
     .then(function (idea) {
         res.send(idea);
       })
