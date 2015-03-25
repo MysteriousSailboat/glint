@@ -10,4 +10,8 @@ module.exports = function (app) {
     app.route('/')
       .get(boardController.allBoards)
       .post(boardController.newBoard);
+
+    app.route('/ideas')
+      .get(boardController.boardIdeas)
+      .post(boardController.addIdea);
 };
