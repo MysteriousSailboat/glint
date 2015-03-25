@@ -5,7 +5,7 @@ glintServices.factory('Ideas', function ($http){
   var getIdeas = function (){
     return $http({
       method: 'GET',
-      url: '/api/ideas'
+      url: '/api/boards/ideas'
     }).then(function (response){
       return response.data;
     }).catch(function (error) {
@@ -16,7 +16,7 @@ glintServices.factory('Ideas', function ($http){
   var createIdea = function (idea){
     return $http({
       method: 'POST',
-      url: '/api/ideas',
+      url: '/api/boards/ideas',
       data: idea
     }).then(function (response){
       return response.data;
@@ -148,6 +148,17 @@ glintServices.factory('Boards', function ($http){
     });
   };
 
+  // var getIdeas = function(){
+  //   return $http({
+  //     method: 'GET',
+  //     url: '/api/boards/ideas'
+  //   }).then(function (response){
+  //     return response.data;
+  //   }).catch(function (error) {
+  //     console.error('getBoards error', error);
+  //   });
+  // };
+
   var createBoard = function (board){
     return $http({
       method: 'POST',
@@ -160,8 +171,22 @@ glintServices.factory('Boards', function ($http){
     });
   };
 
+  // var createIdea = function (idea){
+  //   return $http({
+  //     method: 'POST',
+  //     url: '/api/boards/ideas',
+  //     data: idea
+  //   }).then(function (response){
+  //     return response.data;
+  //   }).catch(function (error){
+  //     console.error('createBoard error', error);
+  //   });
+  // };
+
   return {
     getBoards: getBoards,
-    createBoard: createBoard
+    // getIdeas: getIdeas,
+    createBoard: createBoard,
+    // createIdea: createIdea
   };
 });
