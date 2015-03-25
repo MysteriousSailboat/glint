@@ -33,6 +33,7 @@ var updateVoteCount = function(req, res, changeValue, direction) {
 
   // Get the date and set when an idea was upvoted or downvoted.
   var dateTime = Date();
+
   var voteTime;
   if (direction === 'up'){
     voteTime = {lastUpVoted : dateTime};
