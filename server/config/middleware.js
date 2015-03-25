@@ -20,6 +20,7 @@ module.exports = function (app, express) {
   var voteRouter = express.Router();
   var commentRouter = express.Router();
   var userRouter = express.Router();
+  var boardRouter = express.Router();
 
   // Associate the Express server app with the different modules that it should use.
   app.use(bodyParser.urlencoded({extended: true}));
@@ -34,6 +35,8 @@ module.exports = function (app, express) {
   app.use(helpers.logErrors);
   app.use(helpers.handleErrors);
 
+  //Use board router to handle board requests.
+  app.use('/api/boards', boardRouter);
   // Use the idea router for all idea requests.
   app.use('/api/ideas', ideaRouter); 
   // Use vote router for requests related to upvoting or downvoting.
@@ -47,5 +50,9 @@ module.exports = function (app, express) {
   require('../ideas/ideaRoutes.js')(ideaRouter);
   require('../votes/voteRoutes.js')(voteRouter);
   require('../comments/commentRoutes.js')(commentRouter);
+<<<<<<< HEAD
   require('../users/usersRoutes.js')(userRouter);
+=======
+  require('../boards/boardRoutes.js')(boardRouter);
+>>>>>>> (add) add files necessary to implement board hierarchy
 };
