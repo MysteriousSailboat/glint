@@ -6,6 +6,7 @@
 // Our dependencies are by shared services, feature controllers, and third-party modules.
 var app = angular.module('glint', [
   'glint.services',
+  'glint.boards',
   'glint.ideas',
   'glint.votes',
   'glint.auth',
@@ -18,8 +19,11 @@ var app = angular.module('glint', [
 .config(function($routeProvider){
 	$routeProvider
 		.when('/', {
-        templateUrl: 'app/ideas/ideas.html'
+        templateUrl: 'app/boards/boards.html'
       })
+    .when('/ideas', {
+        templateUrl: 'app/ideas/ideas.html'
+    })
     .when('/login', {
         templateUrl: 'app/auth/login.html'
       })
