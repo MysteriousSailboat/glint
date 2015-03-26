@@ -22,7 +22,7 @@ var UserSchema = new mongoose.Schema({
 var User = mongoose.model('users', UserSchema);
 
 User.comparePassword = function(candidatePassword, savedPassword, cb) {
-  console.log(savedPassword);
+  console.log('usersModel: 25', savedPassword);
   bcrypt.compare(candidatePassword, savedPassword, function(err, isMatch){
     if (err) {
       console.log('login error');
@@ -36,11 +36,14 @@ User.comparePassword = function(candidatePassword, savedPassword, cb) {
 UserSchema.pre('save', function(next){
   var that = this;
 
-  bcrypt.hash(this.password, null, function(err, hash){
-    if (err) return next(err);
-    that.password = hash;
-    next();
-  })
+  bcrypt.hash(this.password, null, null, function(err, hash){
+    if (err) {
+      return next(err);
+    } else {
+      that.password = hash;
+      next();
+    }
+  });
 });
 
 module.exports = User;
