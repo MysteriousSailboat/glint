@@ -4,7 +4,7 @@
 // The User controller handles requests passed from the User router.
 
 var Q = require('q');
-var User = require('./userModel.js');
+var User = require('./usersModel.js');
 
 module.exports = {
 
@@ -12,11 +12,11 @@ module.exports = {
   login: function(req, res, next) {
     
     // Bind the Mongoose find method to the Idea model, so that the Q module can use promises with it.
-    var findAllIdeas = Q.nbind(Idea.find, Idea);
+    var findUser = Q.nbind(User.find, User);
     
-    findAllIdeas({})
-      .then(function(ideas) {
-        res.json(ideas);
+    findUser({ username: req.body.username })
+      .then(function(user) {
+        res.json(user);
       })
       .fail(function(error) {
         next(error);
@@ -25,23 +25,21 @@ module.exports = {
 
   // Add a new idea to the MongoDB database.
   signup: function(req, res, next) {
-    var username = req.body.username;
-    var password = req.body.password;
-
     var createUser = Q.nbind(User.create, User);
 
     var newUser = {
-      title: req.body.title,
-      text: req.body.text
+      username: req.body.username,
+      password: req.body.password
     };
 
     createUser(newUser)
       .then(function (createdUser) {
-        if (createdIdea) {
-          res.json(createdIdea);
+        if (createdUser) {
+          res.json(createdUser);
         }
       })
       .fail(function(error) {
+        console.log('HERE')
         next(error);
       });
 
