@@ -20,8 +20,8 @@ var UserSchema = new mongoose.Schema({
 });
 
 var User = mongoose.model('users', UserSchema);
-
-User.comparePassword = function(candidatePassword, savedPassword, cb) {
+User.methods = {};
+User.methods.comparePasswords = function(candidatePassword, savedPassword, cb) {
   console.log('usersModel: 25', savedPassword);
   bcrypt.compare(candidatePassword, savedPassword, function(err, isMatch){
     if (err) {

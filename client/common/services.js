@@ -67,9 +67,9 @@ glintServices.factory('Votes', function($http){
   };
 });
 
-glintServices.factory('Auth', function($http){
+glintServices.factory('Auth', function($http, $window){
 
-  var login = function (user){
+  var signin = function (user){
     return $http({
       method: 'POST',
       url: '/api/signin',
@@ -81,6 +81,10 @@ glintServices.factory('Auth', function($http){
     .catch(function (error) {
       console.error('login error', error);
     });  };
+
+  var isAuth = function () {
+    return !!$window.localStorage.getItem('com.glint');
+  };
 
     var signup = function (user){
       return $http({
@@ -96,10 +100,10 @@ glintServices.factory('Auth', function($http){
       });
     };
 
-    var logout = function (user){
+    var signout = function (user){
       return $http({
         method: 'POST',
-        url: '/api/logout'
+        url: '/api/signout'
       })
       .then(function (response){
         return response.data;
@@ -109,9 +113,10 @@ glintServices.factory('Auth', function($http){
       });  };
 
       return {
-        login: login,
+        signin: signin,
         signup: signup,
-        logout: logout
+        signout: signout,
+        isAuth: isAuth
       };
     });
 

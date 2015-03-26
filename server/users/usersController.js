@@ -1,76 +1,87 @@
-// User Controller
-// ---------------
-//
-// The User controller handles requests passed from the User router.
-
-var Q = require('q');
-var User = require('./usersModel.js');
-var util = require('./../config/utility.js');
+var User = require('./usersModel.js'),
+    Q    = require('q'),
+    jwt  = require('jwt-simple');
 
 module.exports = {
+  signin: function (req, res, next) {
+    var username = req.body.username,
+        password = req.body.password;
 
-  // Retrieve all of the ideas that exist in the MongoDB database.
-  login: function(req, res, next) {
-
-    // Bind the Mongoose find method to the Idea model, so that the Q module can use promises with it.
     var findUser = Q.nbind(User.findOne, User);
-    
-    findUser({ username: req.body.username })
-    .then(function(user) {
-      console.log(user);
-      if (user) {
-        User.comparePassword(req.body.password, user.password, function(err, isUser){
-          if (isUser) {
-              // success!
-              util.createSession(req,res,user);
-            } else {
-              res.redirect('/signin');
-            }
+    findUser({username: username})
+      .then(function (user) {
+        if (!user) {
+          next(new Error('User does not exist'));
+        } else {
+          return User.methods.comparePasswords(password, user.password, function(err, foundUser){
+            if (foundUser) {
+                var token = jwt.encode(user, 'secret');
+                res.json({token: token});
+              } else {
+                return next(new Error('No user'));
+              }
           })
-      } else {
-        res.json({message: 'User does not exist'});
-      }
-    })
-    .fail(function(error) {
-      next(error);
-    });
+        }
+      })
+      .fail(function (error) {
+        next(error);
+      });
   },
 
-  // Add a new idea to the MongoDB database.
-  signup: function(req, res, next) {
-    var createUser = Q.nbind(User.create, User);
-    var findUser = Q.nbind(User.findOne, User);
+  signup: function (req, res, next) {
+    var username  = req.body.username,
+        password  = req.body.password,
+        create,
+        newUser;
 
-    findUser({ username: req.body.username })
-    .then(function(user) {
-      console.log(user);
-      if (!user) {
+    var findOne = Q.nbind(User.findOne, User);
 
-        var newUser = {
-          username: req.body.username,
-          password: req.body.password
-        };
-
-        createUser(newUser)
-        .then(function (createdUser) {
-          if (createdUser) {
-            util.createSession(req,res,createdUser);
+    // check to see if user already exists
+    findOne({username: username})
+      .then(function(user) {
+        if (user) {
+          next(new Error('User already exist!'));
+        } else {
+          // make a new user if not one
+          create = Q.nbind(User.create, User);
+          newUser = {
+            username: username,
+            password: password
+          };
+          return create(newUser);
+        }
+      })
+      .then(function (user) {
+        // create token to send back for auth
+        var token = jwt.encode(user, 'secret');
+        res.json({token: token});
+      })
+      .fail(function (error) {
+        next(error);
+      });
+  },
+  checkAuth: function (req, res, next) {
+    // checking to see if the user is authenticated
+    // grab the token in the header is any
+    // then decode the token, which we end up being the user object
+    // check to see if that user exists in the database
+    var token = req.headers['x-access-token'];
+    if (!token) {
+      next(new Error('No token'));
+    } else {
+      var user = jwt.decode(token, 'secret');
+      var findUser = Q.nbind(User.findOne, User);
+      findUser({username: user.username})
+        .then(function (foundUser) {
+          if (foundUser) {
+            res.send(200);
+          } else {
+            res.send(401);
           }
         })
-        .fail(function(error) {
+        .fail(function (error) {
           next(error);
         });
-      } else {
-        res.json({message: 'Duplicate username'});
-      }
-    })
-    .fail(function(error) {
-      next(error);
-    });
-  },
-  logout: function(req, res, next){
-    req.session.destroy(function(){
-      res.redirect('/#/login');
-    })
+    }
   }
 };
