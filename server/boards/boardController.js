@@ -33,6 +33,7 @@ module.exports = {
     // Create a new document from the Board model. If successfully created then the new Board document is returned.
     var newBoard = {
       boardName: req.body.boardName,
+      caption: req.body.caption,
       ideas: []
     };
 
@@ -85,6 +86,6 @@ module.exports = {
   //     .fail(function(error) {
   //       next(error);
   //     });
-  // }
+  }
 
 };
