@@ -2,10 +2,10 @@ var glintServices = angular.module('glint.services', []);
 
 glintServices.factory('Ideas', function ($http){
 
-  var getIdeas = function (currBoard){
+  var getIdeas = function (path){
     return $http({
       method: 'GET',
-      url: '/api/boards/ideas' + '?' + currBoard
+      url: '/api/boards' + path
     }).then(function (response){
       return response.data;
     }).catch(function (error) {
@@ -13,10 +13,10 @@ glintServices.factory('Ideas', function ($http){
     });
   };
 
-  var createIdea = function (currBoard, idea){
+  var createIdea = function (path, idea){
     return $http({
       method: 'POST',
-      url: '/api/boards/ideas' + '?' + currBoard,
+      url: '/api/boards' + path,
       data: idea
     }).then(function (response){
       return response.data;
