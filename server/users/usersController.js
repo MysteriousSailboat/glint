@@ -12,11 +12,18 @@ module.exports = {
   login: function(req, res, next) {
     
     // Bind the Mongoose find method to the Idea model, so that the Q module can use promises with it.
-    var findUser = Q.nbind(User.find, User);
+    var findUser = Q.nbind(User.findOne, User);
     
     findUser({ username: req.body.username })
       .then(function(user) {
-        res.json(user);
+        console.log(user);
+        if (user) {
+          User.comparePassword(req.body.password, user.password, function(err, isUser){
+            res.json(isUser);
+          })
+        } else {
+          res.json({message: 'User does not exist'});
+        }
       })
       .fail(function(error) {
         next(error);
@@ -39,7 +46,6 @@ module.exports = {
         }
       })
       .fail(function(error) {
-        console.log('HERE')
         next(error);
       });
 
