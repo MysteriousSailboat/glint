@@ -7,6 +7,7 @@ var mongoose = require('mongoose');
 
 var BoardSchema = new mongoose.Schema({
     boardName: String,
+    caption: String,
     ideas: Array,
     views: { type: Number, default: 0 },
     created_by: { type: String, default: 'anonymous' },
