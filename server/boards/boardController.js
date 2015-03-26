@@ -6,6 +6,8 @@
 // The Q module is used to bind Mongoose methods to use promises.
 var Q = require('q');
 var Board = require('./boardModel.js');
+var Idea = require('../ideas/ideaModel.js');
+var querystring = require('querystring');
 
 module.exports = {
 
@@ -50,42 +52,56 @@ module.exports = {
 
   // Retrieve all of the ideas that exist in the MongoDB database for current board.
   boardIdeas: function(req, res, next) {
-
-    console.log(req.body.url);    
-    // // Bind the Mongoose find method to the Idea model, so that the Q module can use promises with it.
-    // var findAllIdeas = Q.nbind(Idea.find, Idea);
+    // Determine the board we are pulling from
+    var boardName = querystring.unescape(req._parsedUrl.query);
     
-    // findAllIdeas({})
-    //   .then(function(ideas) {
-    //     res.json(ideas);
-    //   })
-    //   .fail(function(error) {
-    //     next(error);
-    //   });
+    // Bind the Mongoose find method to the Idea model, so that the Q module can use promises with it.
+    var findBoard = Q.nbind(Board.find, Board);
+    
+    findBoard({ boardName: boardName })
+      .then(function(board) {
+        res.json(board[0].ideas);
+      })
+      .fail(function(error) {
+        next(error);
+      });
   },
 
   // Add a new idea to the MongoDB database.
   addIdea: function(req, res, next) {
-  
-  console.log(req.body.url);
-  //   // Bind the Mongoose create method to the Idea model, so that the Q module can use promises with it.
-  //   var createIdea = Q.nbind(Idea.create, Idea);
+    // Determine the board we are adding to.
+    var boardName = querystring.unescape(req._parsedUrl.query);
 
-  //   // Create a new document from the Idea model. If successfully created then the new Idea document is returned.
-  //   var newIdea = {
-  //     title: req.body.title,
-  //     text: req.body.text
-  //   };
+    // Bind the Mongoose create method to the Idea model, so that the Q module can use promises with it.
+    var createIdea = Q.nbind(Idea.create, Idea);
+    var findBoard = Q.nbind(Board.find, Board);
 
-  //   createIdea(newIdea)
-  //     .then(function (createdIdea) {
-  //       if (createdIdea) {
-  //           res.json(createdIdea);
-  //       }
-  //     })
-  //     .fail(function(error) {
-  //       next(error);
-  //     });
+    // Create a new document from the Idea model. If successfully created then the new Idea document is returned.
+    var newIdea = {
+      title: req.body.title,
+      text: req.body.text
+    };
+
+    createIdea(newIdea)
+      .then(function (createdIdea) {
+        if (createdIdea) {
+            findBoard({ boardName: boardName})
+              .then(function(board) {
+                board[0].ideas.push(createdIdea);
+                return board;
+              })
+              .then(function(modifiedBoard){
+                modifiedBoard[0].save();
+                res.json(modifiedBoard[0].ideas);
+              })
+              .fail(function(error) {
+                next(error);
+              });
+        }
+      })
+      .fail(function(error) {
+        next(error);
+      });
   }
 
 };
