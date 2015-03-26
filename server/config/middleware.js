@@ -50,9 +50,6 @@ module.exports = function (app, express) {
   require('../ideas/ideaRoutes.js')(ideaRouter);
   require('../votes/voteRoutes.js')(voteRouter);
   require('../comments/commentRoutes.js')(commentRouter);
-<<<<<<< HEAD
   require('../users/usersRoutes.js')(userRouter);
-=======
   require('../boards/boardRoutes.js')(boardRouter);
->>>>>>> (add) add files necessary to implement board hierarchy
 };
