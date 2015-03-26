@@ -2,10 +2,10 @@ var glintServices = angular.module('glint.services', []);
 
 glintServices.factory('Ideas', function ($http){
 
-  var getIdeas = function (){
+  var getIdeas = function (path){
     return $http({
       method: 'GET',
-      url: '/api/ideas'
+      url: '/api/boards' + path
     }).then(function (response){
       return response.data;
     }).catch(function (error) {
@@ -13,10 +13,10 @@ glintServices.factory('Ideas', function ($http){
     });
   };
 
-  var createIdea = function (idea){
+  var createIdea = function (path, idea){
     return $http({
       method: 'POST',
-      url: '/api/ideas',
+      url: '/api/boards' + path,
       data: idea
     }).then(function (response){
       return response.data;
@@ -135,3 +135,58 @@ glintServices.factory('Comments', function ($http){
   };
 });
 
+glintServices.factory('Boards', function ($http){
+
+  var getBoards = function (){
+    return $http({
+      method: 'GET',
+      url: '/api/boards'
+    }).then(function (response){
+      return response.data;
+    }).catch(function (error) {
+      console.error('getBoards error', error);
+    });
+  };
+
+  // var getIdeas = function(){
+  //   return $http({
+  //     method: 'GET',
+  //     url: '/api/boards/ideas'
+  //   }).then(function (response){
+  //     return response.data;
+  //   }).catch(function (error) {
+  //     console.error('getBoards error', error);
+  //   });
+  // };
+
+  var createBoard = function (board){
+    return $http({
+      method: 'POST',
+      url: '/api/boards',
+      data: board
+    }).then(function (response){
+      return response.data;
+    }).catch(function (error) {
+      console.error('createBoard error', error);
+    });
+  };
+
+  // var createIdea = function (idea){
+  //   return $http({
+  //     method: 'POST',
+  //     url: '/api/boards/ideas',
+  //     data: idea
+  //   }).then(function (response){
+  //     return response.data;
+  //   }).catch(function (error){
+  //     console.error('createBoard error', error);
+  //   });
+  // };
+
+  return {
+    getBoards: getBoards,
+    // getIdeas: getIdeas,
+    createBoard: createBoard,
+    // createIdea: createIdea
+  };
+});
