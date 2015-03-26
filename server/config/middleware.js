@@ -10,6 +10,9 @@ var helpers = require('./helpers.js');
 // Logs requests sent from the client.
 var morgan = require('morgan'); 
 
+var session = require('express-session');
+var cookieParser = require('cookie-parser');
+
 module.exports = function (app, express) {
 
   // Create Express routers for each type of route.
@@ -21,6 +24,11 @@ module.exports = function (app, express) {
   // Associate the Express server app with the different modules that it should use.
   app.use(bodyParser.urlencoded({extended: true}));
   app.use(bodyParser.json());
+  app.use(cookieParser());
+  app.use(session({ secret: "I like turtles",
+  saveUninitialized: true,
+  resave: true }));
+
   app.use(express.static(__dirname + '/../../client'));
   app.use(morgan('dev'));
   app.use(helpers.logErrors);

@@ -5,6 +5,7 @@
 
 var Q = require('q');
 var User = require('./usersModel.js');
+var util = require('./../config/utility.js');
 
 module.exports = {
 
@@ -19,7 +20,12 @@ module.exports = {
         console.log(user);
         if (user) {
           User.comparePassword(req.body.password, user.password, function(err, isUser){
-            res.json(isUser);
+            if (isUser) {
+              // success!
+              util.createSession(req,res,user);
+            } else {
+              res.redirect('/login');
+            }
           })
         } else {
           res.json({message: 'User does not exist'});
@@ -42,7 +48,7 @@ module.exports = {
     createUser(newUser)
       .then(function (createdUser) {
         if (createdUser) {
-          res.json(createdUser);
+          util.createSession(req,res,createdUser);
         }
       })
       .fail(function(error) {
