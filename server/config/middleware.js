@@ -19,10 +19,8 @@ module.exports = function (app, express) {
   var ideaRouter = express.Router();
   var voteRouter = express.Router();
   var commentRouter = express.Router();
-<<<<<<< HEAD
   var userRouter = express.Router();
-=======
->>>>>>> cdc7ae1f003be64cd20ff4143a20fda3e4332681
+
   var boardRouter = express.Router();
 
   // Associate the Express server app with the different modules that it should use.
