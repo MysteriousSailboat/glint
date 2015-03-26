@@ -28,6 +28,10 @@
 
   <div class="idea-container">
     <div class="col-md-1 upvote-downvote-wrapper" ng-controller="VotesCtrl as vctrl">
+
+      <img src="../assets/dollarSign.jpeg" ng-if="idea.displayDollarSign"></img>
+      <img src="../assets/stockDown.png" ng-if="idea.displayStockDown"></img>
+      
       <i class="fa fa-sort-asc" ng-click="vctrl.upvote(idea)"></i> <!-- upvote -->
       <div class="vote-points">{{ idea.votes }}</div>
       <i class="fa fa-sort-desc" ng-click="vctrl.downvote(idea)"></i> <!-- downvote -->
@@ -46,6 +50,7 @@
       </div>
     </div>
   </div>
+  
   <div class="col-md-1">
   </div>
 </div>
