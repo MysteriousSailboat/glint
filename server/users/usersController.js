@@ -24,7 +24,7 @@ module.exports = {
               // success!
               util.createSession(req,res,user);
             } else {
-              res.redirect('/login');
+              res.redirect('/signin');
             }
           })
       } else {
@@ -67,5 +67,10 @@ module.exports = {
     .fail(function(error) {
       next(error);
     });
+  },
+  logout: function(req, res, next){
+    req.session.destroy(function(){
+      res.redirect('/#/login');
+    })
   }
 };

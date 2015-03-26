@@ -11,27 +11,43 @@ angular.module('glint.auth', [])
 
   // Allow user to declare who they are to the system.
   self.login = function() {
-    self.user.username = _.escape(self.user.username);
-    self.user.password = _.escape(self.user.password);
+    self.user.username = self.user.username;
+    self.user.password = self.user.password;
     var user = JSON.stringify(self.user);
 
     Auth.login(user)
-      .then(function (response){})
-      .catch(function (error){
-        console.error('login error', error);
-      });
+    .then(function (response){
+      
+    })
+    .catch(function (error){
+      console.error('login error', error);
+    });
   };
 
   // Allow user to first-time identify themselves to the system.
   self.signup = function() {
-    self.user.username = _.escape(self.user.username);
-    self.user.password = _.escape(self.user.password);
+    self.user.username = self.user.username;
+    self.user.password = self.user.password;
     var user = JSON.stringify(self.user);
 
     Auth.signup(user)
-      .then(function (response){})
-      .catch(function (error){
-        console.error('signup error', error);
-      });
+    .then(function (response){
+
+    })
+    .catch(function (error){
+      console.error('signup error', error);
+    });
   };
+
+  self.logout = function() {
+    Auth.logout()
+    .then(function (response){
+
+    })
+    .catch(function (error){
+      console.error('logout error', error);
+    });
+  };
+
+
 });

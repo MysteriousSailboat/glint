@@ -82,28 +82,41 @@ glintServices.factory('Auth', function($http){
       console.error('login error', error);
     });  };
 
-  var signup = function (user){
-    return $http({
-      method: 'POST',
-      url: '/api/signup',
-      data: user
-    })
-    .then(function (response){
-      return response.data;
-    })
-    .catch(function (error) {
-      console.error('signup error', error);
-    });
-  };
+    var signup = function (user){
+      return $http({
+        method: 'POST',
+        url: '/api/signup',
+        data: user
+      })
+      .then(function (response){
+        return response.data;
+      })
+      .catch(function (error) {
+        console.error('signup error', error);
+      });
+    };
 
-  return {
-    login: login,
-    signup: signup
-  };
-});
+    var logout = function (user){
+      return $http({
+        method: 'POST',
+        url: '/api/logout'
+      })
+      .then(function (response){
+        return response.data;
+      })
+      .catch(function (error) {
+        console.error('logout error', error);
+      });  };
+
+      return {
+        login: login,
+        signup: signup,
+        logout: logout
+      };
+    });
 
 glintServices.factory('Comments', function ($http){
-  
+
   var createComment = function (comment){
     return $http({
       method: 'POST',

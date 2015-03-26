@@ -18,26 +18,29 @@ var app = angular.module('glint', [
 // Routing configuration. Eventually, this is where the controllers for the specific views will be declared, so they don't have to be referred to in our HTML. (Eg. <varname> instead of AuthCtrl.<varname>)
 .config(function($routeProvider){
 	$routeProvider
-		.when('/', {
-        templateUrl: 'app/boards/boards.html'
-      })
-    .when('/ideas', {
-        templateUrl: 'app/ideas/ideas.html'
-    })
-    .when('/login', {
-        templateUrl: 'app/auth/login.html'
-      })
-    .when('/signup', {
-        templateUrl: 'app/auth/signup.html'
-      })
-    .otherwise({
-        redirectTo: '/'
-      });
+  .when('/', {
+    templateUrl: 'app/boards/boards.html'
+  })
+  .when('/ideas', {
+    templateUrl: 'app/ideas/ideas.html'
+  })
+  .when('/login', {
+    templateUrl: 'app/auth/login.html'
+  })
+  .when('/signup', {
+    templateUrl: 'app/auth/signup.html'
+  })
+  .when('/logout', {
+    templateUrl: 'app/auth/login.html'
+  })
+  .otherwise({
+    redirectTo: '/'
+  });
 })
 
 // Custom filter for applying moment.js to our timestamps.
 .filter('moment', function () {
   return function (dateString) {
-      return moment(dateString).fromNow();
+    return moment(dateString).fromNow();
   };
 });

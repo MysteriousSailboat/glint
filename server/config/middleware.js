@@ -10,6 +10,8 @@ var helpers = require('./helpers.js');
 // Logs requests sent from the client.
 var morgan = require('morgan'); 
 
+var util = require('./utility.js');
+
 var session = require('express-session');
 var cookieParser = require('cookie-parser');
 
@@ -35,6 +37,10 @@ module.exports = function (app, express) {
   app.use(morgan('dev'));
   app.use(helpers.logErrors);
   app.use(helpers.handleErrors);
+
+  app.get('/', util.checkUser, function(req,res){
+
+  })
 
   //Use board router to handle board requests.
   app.use('/api/boards', boardRouter);
