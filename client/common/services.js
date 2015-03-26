@@ -162,8 +162,21 @@ glintServices.factory('Boards', function ($http){
     });
   };
 
+  var updateViews = function (boardName){
+    return $http({
+      method: 'POST',
+      url: '/api/boards/plusView',
+      data: {'boardName': boardName}
+    }).then(function (response){
+      return response.data;
+    }).catch(function (error) {
+      console.error('addView error', error);
+    });
+  };
+
   return {
     getBoards: getBoards,
     createBoard: createBoard,
+    updateViews: updateViews
   };
 });
