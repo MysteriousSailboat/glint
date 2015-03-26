@@ -26,12 +26,13 @@ module.exports = {
 // Add up or down vote indications.
 var updateVoteCount = function(req, res, changeValue, direction) {
 
-  // Bind the findOneandUpdate method to use promises
+  // Bind the findOneandUpdate method to use promises.
   var updateVotes = Q.nbind(Idea.findOneAndUpdate, Idea);
 
   var query = { title: req.body.title };
+
+  // Get the date and set when an idea was upvoted or downvoted.
   var dateTime = Date();
-  console.log(dateTime);
   var voteTime;
   if (direction === 'up'){
     voteTime = {lastUpVoted : dateTime};
@@ -39,8 +40,6 @@ var updateVoteCount = function(req, res, changeValue, direction) {
   if (direction === 'down'){
     voteTime = {lastDownVoted : dateTime};
   };
-
-
 
   updateVotes(query, { $inc: { votes: changeValue }, $set: voteTime} )
     .then(function (idea) {
