@@ -5,6 +5,7 @@
 
 var Q = require('q');
 var Idea = require('../ideas/ideaModel.js');
+var User = require('../users/usersModel.js')
 var Board = require('../boards/boardModel.js');
 var querystring = require('querystring');
 
@@ -12,23 +13,45 @@ module.exports = {
 
   // Add one to the vote count for a given idea.
   upvote: function(req, res, next) {
+    // console.log(req.body.username)
+    // updateVoteCount(req, res, 1, 'up');
 
-    updateVoteCount(req, res, 1, 'up');
-
+    var findUser = Q.nbind(User.findOne, User);
+    findUser( {username: req.body.username} )
+    .then(function (user) {
+      if (user.votes > 0) {
+        user.votes -= 1;
+        user.save(function(err){
+          updateVoteCount(req, res, 1, 'up');
+        })
+      } else {
+          // no votes
+          res.status(401).send();
+        } 
+      })
   },
 
   // Subtract one from the vote count for a given idea.
   downvote: function(req, res, next) {
-    updateVoteCount(req, res, -1, 'down');
+    var findUser = Q.nbind(User.findOne, User);
+    findUser( {username: req.body.username} )
+    .then(function (user) {
+      if (user.votes > 0) {
+        user.votes -= 1;
+        user.save(function(err){
+          updateVoteCount(req, res, -1, 'down');
+        })
+      } else {
+          res.status(401).send()
+        } 
+      })
   }
-
 };
 
 
 // Update the vote count for an idea.
 // Add up or down vote indications.
 var updateVoteCount = function(req, res, changeValue, direction) {
-  
   // Split the path to get the board name 
   var boardName = querystring.unescape(req.body.path);
   var bn = boardName.split('?')
@@ -52,14 +75,14 @@ var updateVoteCount = function(req, res, changeValue, direction) {
 
   // Query the board, the query the title.
   updateBoard({ 'boardName' : boardName, 'ideas.title': targetIdea.title}, { $inc : { "ideas.$.votes" : changeValue }, $set :voteTime } )
-    .then(function (board){
-      res.send(board);
-    })
-    .fail(function (err) {
-      console.log(err);
-      next(err);
-    });  
-    
+  .then(function (board){
+    res.send(board);
+  })
+  .fail(function (err) {
+    console.log(err);
+    next(err);
+  });  
+
 };
 
 // var updateUser = function(req, res, changeValue) {

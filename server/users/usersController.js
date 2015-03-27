@@ -77,6 +77,7 @@ module.exports = {
       findUser({username: user.username})
         .then(function (foundUser) {
           if (foundUser) {
+            req.body.username = foundUser.username;
             next()
             // res.send(200);
           } else {
