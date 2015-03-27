@@ -8,6 +8,17 @@ body {
   padding-top: 50px;
 }
 
+.login-failure {
+  background-color: red;
+  font-family: 'Lato', sans-serif !important;
+  font-size: 30px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  margin-bottom: 20px;
+  border: 2px solid #a1a1a1;
+  border-radius: 25px;
+}
+
 .nav-bar-custom {
   background-color: #222;
   color: white;

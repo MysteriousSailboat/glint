@@ -9,6 +9,8 @@ angular.module('glint.auth', [])
   var self = this;
   self.user = {};
   // for displaying the login error message
+  $scope.loginUsernameFailure = false;
+  $scope.loginPasswordFailure = false;
   $scope.loginFailure = false;
 
   // Allow user to declare who they are to the system.
@@ -19,6 +21,8 @@ angular.module('glint.auth', [])
 
     Auth.signin(user)
     .then(function (res){
+      $scope.loginUsernameFailure = false;
+      $scope.loginPasswordFailure = false;
       $scope.loginFailure = false;
       token = res.data;
       $window.localStorage.setItem('com.glint', JSON.stringify(token));
@@ -26,7 +30,15 @@ angular.module('glint.auth', [])
     })
     .catch(function (error){
       //render error happens in Auth.signin service
-      $scope.loginFailure = true;
+      console.log(error);
+      if (error.status === 401) {
+        $scope.loginPasswordFailure = true;
+        $scope.loginFailure = true;
+      }
+      if (error.status === 404) {
+        $scope.loginUsernameFailure = true;
+        $loginFailure = true;
+      }
     });
   };
 
