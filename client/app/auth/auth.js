@@ -19,12 +19,14 @@ angular.module('glint.auth', [])
 
     Auth.signin(user)
     .then(function (res){
+      $scope.loginFailure = false;
       token = res.data;
       $window.localStorage.setItem('com.glint', JSON.stringify(token));
       $location.path('/');
     })
     .catch(function (error){
-      //render error?
+      //render error happens in Auth.signin service
+      $scope.loginFailure = true;
     });
   };
 
