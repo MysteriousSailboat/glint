@@ -19,6 +19,7 @@ module.exports = {
     
     findAllBoards({})
       .then(function(boards) {
+        res.status(200);
         res.json(boards);
       })
       .fail(function(error) {

@@ -20,10 +20,12 @@ var app = angular.module('glint', [
 	$routeProvider
   .when('/', {
     templateUrl: 'app/boards/boards.html',
-    controller: 'AuthCtrl'
+    controller: 'AuthCtrl',
+    authenticate: true
   })
   .when('/ideas', {
     templateUrl: 'app/ideas/ideas.html',
+    authenticate: true
 
   })
   .when('/login', {
@@ -76,6 +78,8 @@ var app = angular.module('glint', [
   // and send that token to the server to see if it is a real user or hasn't expired
   // if it's not valid, we then redirect back to signin/signup
   $rootScope.$on('$routeChangeStart', function (evt, next, current) {
+        console.log(next.$$route );
+        console.log(Auth.isAuth());
     if (next.$$route && next.$$route.authenticate && !Auth.isAuth()) {
       $location.path('/signin');
     }

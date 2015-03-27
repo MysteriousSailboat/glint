@@ -43,12 +43,6 @@ angular.module('glint.auth', [])
 
   self.signout = function() {
     Auth.signout()
-    .then(function (token){
-
-    })
-    .catch(function (error){
-      console.error('logout error', error);
-    });
   };
 
 
