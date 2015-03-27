@@ -87,6 +87,17 @@ glintServices.factory('Auth', function($http, $window, $location){
       url: '/api/signin',
       data: user
     })
+    success(function(data, status, headers, config) {
+      // this callback will be called asynchronously
+      // when the response is available
+      // want to set auth.js's $scope.loginFailure to false
+    })
+    .error(function(data, status, headers, config) {
+    // called asynchronously if an error occurs
+    // or server returns response with an error status.
+    // console.log('Error from Auth.signin factory');
+    // want to set auth.js's $scope.loginFailure to true
+  })
  };
 
   var isAuth = function () {
