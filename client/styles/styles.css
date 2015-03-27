@@ -362,3 +362,23 @@ a.glint-logo-icon:link{
   color: black !important;
   text-shadow: -1px 0 #A4A6AB, 0 1px #A4A6AB, 1px 0 #A4A6AB, 0 -1px #A4A6AB;
 }
+
+.pic {
+  left: -50px;
+  width:100px;
+  height:100px;
+}
+
+.upvote {
+  background-color: red !important;
+  width : 10px;
+  display: inline-block;
+  margin: 0 auto;
+}
+
+.downvote {
+  background-color: blue !important;
+  width : 10px;
+  display: inline-block;
+  margin: 0 auto; 
+}

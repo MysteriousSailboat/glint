@@ -23,17 +23,45 @@ angular.module('glint.ideas', [])
         
         results.map(function(result){
           var good = false;
-          var bad = false
+          var bad = false;
+          //will calculate for 0-100.  100 being voted on just now, 0 being voted on 10 minutes ago;
+          //Times are in ms.  10 minutes * 60 seconds/minute * 1000ms/second =600,000ms 
+          // console.log(date, "<---new date,   date from server --->", Date.parse(result.lastUpVoted));
+          // console.log("calc factor", date - Date.parse(result.lastUpVoted));
+          // console.log(((600000 -date-Date.parse(result.lastUpVoted))/600000));
+            
+
+          // Expect input to not be parsed
+          var calcTime = function(time){
+            var timeWindow = 600000 // 10 minutes
+            var date = new Date();
+            date = Date.parse(date);
+            time = Date.parse(time);
+            var timeDiff = date-time;
+            // console.log("date", date, "time", time, "timeDiff", timeDiff);
+            if (timeDiff < timeWindow){
+              factor = 1 - (timeDiff/timeWindow);
+            } else {
+              factor = 0;
+            }
+            // The returned number will used to to scale a visual object, output will be between 0-100 (0 is older than timeWindow, 100 would be right now)
+            return factor*100;
+          };
+
+          // Add the sizes to e
+          result.upVoteSize = {'height' : calcTime(result.lastUpVoted)+'px'};
+          result.downVoteSize = {'height' : calcTime(result.lastDownVoted) + 'px'};
+          // console.log("Time factor",calcTime(result.lastUpVoted));
+
           if (Date.parse(result.lastUpVoted) - Date.parse(result.lastDownVoted) > 0){
             good = true;
           } else {
             bad = true;
           }
-          console.log(result);
+          
           result.displayDollarSign = good;
           result.displayStockDown = bad;
         })
-
 
         self.data.ideas = results;
         // console.log(self.data.ideas);
