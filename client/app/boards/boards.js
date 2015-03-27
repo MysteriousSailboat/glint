@@ -32,8 +32,10 @@ angular.module('glint.boards', [])
     } else {
 
     // Escape user input.
+    var username = JSON.parse(window.localStorage['com.glint']).username;
     self.board.boardName = _.escape(self.board.boardName);
     self.board.caption = _.escape(self.board.caption);
+    self.board.username = _.escape(username);
     var board = JSON.stringify(self.board);
     
     // POST new board, display confirmation, redisplay all boards.
