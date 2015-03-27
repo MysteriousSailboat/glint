@@ -5,11 +5,13 @@
 
 body {
   font-family: 'Lato', sans-serif !important;
+  padding-top: 50px;
 }
 
 .nav-bar-custom {
-  background-color: #046380;
+  background-color: #222;
   color: white;
+  border-bottom: 1px solid #555;
 }
 
 .nav-bar-custom a{
@@ -33,7 +35,7 @@ body {
   padding: 20px 0 !important;
 	text-align: center;
   margin-bottom: 0 !important;
-  background-image: url('../assets/american-flag-eagle.jpg');
+  background-image: url('../assets/USA-Flag.png');
   background-size: cover;
 }
 
@@ -42,6 +44,7 @@ body {
   font-family: 'Lato', sans-serif;
   font-weight: bold;
 }
+
 
 input.form-control {
   width: 650px !important;
@@ -285,4 +288,8 @@ a.glint-logo-icon:link{
   height: 0;
   padding: 0;
   opacity: 0;
+}
+
+.title-text {
+    text-shadow: -1px 0 white, 0 1px white, 1px 0 white, 0 -1px white;
 }
