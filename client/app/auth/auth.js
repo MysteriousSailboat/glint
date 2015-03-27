@@ -5,9 +5,13 @@
 
 angular.module('glint.auth', [])
 
-.controller('AuthCtrl', function(Auth, $window, $location){ 
+.controller('AuthCtrl', function(Auth, $scope, $window, $location){ 
   var self = this;
   self.user = {};
+  // for displaying the login error message
+  self.loginUsernameFailure = false;
+  self.loginPasswordFailure = false;
+  self.userNameExists = false;
 
   // Allow user to declare who they are to the system.
   self.signin = function() {
@@ -17,12 +21,26 @@ angular.module('glint.auth', [])
 
     Auth.signin(user)
     .then(function (res){
+      self.loginUsernameFailure = false;
+      self.loginPasswordFailure = false;
       token = res.data;
       $window.localStorage.setItem('com.glint', JSON.stringify(token));
       $location.path('/');
     })
     .catch(function (error){
-      //render error?
+      //render error happens in Auth.signin service
+      if (error.status === 401 && error.status === 404) {
+        self.loginUsernameFailure = true;
+        self.loginPasswordFailure = true;
+      }
+      else if (error.status === 401) {
+        self.loginUsernameFailure = false;
+        self.loginPasswordFailure = true;
+      }
+      else if (error.status === 404) {
+        self.loginPasswordFailure = false;
+        self.loginUsernameFailure = true;
+      }
     });
   };
 
@@ -34,12 +52,14 @@ angular.module('glint.auth', [])
 
     Auth.signup(user)
     .then(function (res){
+      self.userNameExists = false;
       token = res.data;
       $window.localStorage.setItem('com.glint', JSON.stringify(token));
       $location.path('/');
     })
     .catch(function (error){
       console.error('signup error', error);
+      self.userNameExists = true;
     });
   };
 
