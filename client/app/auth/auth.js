@@ -29,11 +29,16 @@ angular.module('glint.auth', [])
     })
     .catch(function (error){
       //render error happens in Auth.signin service
-      console.log(error);
-      if (error.status === 401) {
+      if (error.status === 401 && error.status === 404) {
+        $scope.loginUsernameFailure = true;
         $scope.loginPasswordFailure = true;
       }
-      if (error.status === 404) {
+      else if (error.status === 401) {
+        $scope.loginUsernameFailure = false;
+        $scope.loginPasswordFailure = true;
+      }
+      else if (error.status === 404) {
+        $scope.loginPasswordFailure = false;
         $scope.loginUsernameFailure = true;
       }
     });
