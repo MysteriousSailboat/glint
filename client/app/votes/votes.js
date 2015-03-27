@@ -14,13 +14,15 @@ angular.module('glint.votes', [])
 
     idea = JSON.stringify(idea);
     Votes.upvote(path, idea)
-      .then(function (response){
-        // Update the specific idea's vote count.
-        ideaRef.votes++;
+    .then(function (response){
+        if (response){
+          ideaRef.votes++;
+        } 
       })
-      .catch(function (error){
-        console.error('upvote error', error);
-      });
+    .catch(function (error){
+      console.error('upvote error', error);
+      //display something
+    });
   };
 
   // Display the user's downvotes and pass them along to the db.
@@ -30,12 +32,14 @@ angular.module('glint.votes', [])
 
     idea = JSON.stringify(idea);
     Votes.downvote(path, idea)
-      .then(function (response){
-        // Update the specific idea's vote count.
-        ideaRef.votes--;
+    .then(function (response){
+        if (response){
+          ideaRef.votes--;
+        } 
       })
-      .catch(function (error){
-        console.error('downvote error', error);
-      });
+    .catch(function (error){
+      console.error('downvote error', error);
+      //display something
+    });
   };
 });
