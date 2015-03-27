@@ -54,7 +54,7 @@ angular.module('glint.boards', [])
   };
 
   self.loadIdeas = function (board){
-    console.log(board);
+    Boards.updateViews(board.boardName);
     $location.path('/ideas').search(board.boardName);
   };
 
