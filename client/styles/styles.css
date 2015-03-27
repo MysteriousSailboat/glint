@@ -362,3 +362,39 @@ a.glint-logo-icon:link{
   color: black !important;
   text-shadow: -1px 0 #A4A6AB, 0 1px #A4A6AB, 1px 0 #A4A6AB, 0 -1px #A4A6AB;
 }
+
+.pic {
+  left: -50px;
+  width:100px;
+  height:100px;
+}
+
+.upvote {
+  vertical-align: top;
+  background-color: red !important;
+  width : 15px;
+  display: inline-block;
+  margin: 0 auto;
+
+}
+.voting-bars{
+  width : 20px;
+  height: 20px;
+  display : inline-block;
+  margin : 0 auto;
+}
+
+.downvote {
+  vertical-align: top;
+  background-color: blue !important;
+  width : 15px;
+  display : inline-block;
+  margin : 0 auto; 
+}
+.icon-bars {
+  margin : 0 auto;
+  display : inline-block;
+  vertical-align : top;
+  height : 30px;
+  width : 30px;
+}
