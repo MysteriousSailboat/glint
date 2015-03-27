@@ -11,14 +11,14 @@ module.exports = {
     findUser({username: username})
       .then(function (user) {
         if (!user) {
-          next(new Error('User does not exist'));
+          res.json("user doesn't exist");
         } else {
           return User.methods.comparePasswords(password, user.password, function(err, foundUser){
             if (foundUser) {
                 var token = jwt.encode(user, 'secret');
-                res.json({token: token});
+                res.json({token: token, username: username});
               } else {
-                return next(new Error('No user'));
+                 res.json("wrong password");
               }
           })
         }
@@ -54,7 +54,7 @@ module.exports = {
       .then(function (user) {
         // create token to send back for auth
         var token = jwt.encode(user, 'secret');
-        res.json({token: token});
+        res.json({token: token, username: username});
       })
       .fail(function (error) {
         next(error);
@@ -67,14 +67,17 @@ module.exports = {
     // check to see if that user exists in the database
     var token = req.headers['x-access-token'];
     if (!token) {
-      next(new Error('No token'));
+      res.send('nice try!')
     } else {
-      var user = jwt.decode(token, 'secret');
+      console.log(token)
+      // silly hack -- how do we get username to store?
+      var user = jwt.decode(JSON.parse(token).token, 'secret');
       var findUser = Q.nbind(User.findOne, User);
       findUser({username: user.username})
         .then(function (foundUser) {
           if (foundUser) {
-            res.send(200);
+            next()
+            // res.send(200);
           } else {
             res.send(401);
           }

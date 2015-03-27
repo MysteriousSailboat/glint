@@ -14,6 +14,24 @@ var app = angular.module('glint', [
   'ngAnimate',
   'ngRoute'
   ])
+.factory('AttachTokens', function ($window) {
+  // this is an $httpInterceptor
+  // its job is to stop all out going request
+  // then look in local storage and find the user's token
+  // then add it to the header so the server can validate the request
+  var attach = {
+    request: function (object) {
+      var jwt = $window.localStorage.getItem('com.glint');
+      console.log(jwt);
+      if (jwt) {
+        object.headers['x-access-token'] = jwt;
+      }
+      object.headers['Allow-Control-Allow-Origin'] = '*';
+      return object;
+    }
+  };
+  return attach;
+})
 
 // Routing configuration. Eventually, this is where the controllers for the specific views will be declared, so they don't have to be referred to in our HTML. (Eg. <varname> instead of AuthCtrl.<varname>)
 .config(function($routeProvider, $httpProvider){
@@ -38,30 +56,14 @@ var app = angular.module('glint', [
     templateUrl: 'app/auth/login.html'
   })
   .otherwise({
-    redirectTo: '/'
+    redirectTo: '/login'
   });
 
     // We add our $httpInterceptor into the array
     // of interceptors. Think of it like middleware for your ajax calls
-    $httpProvider.interceptors.push('AttachTokens');
+  $httpProvider.interceptors.push('AttachTokens');
 })
-.factory('AttachTokens', function ($window) {
-  // this is an $httpInterceptor
-  // its job is to stop all out going request
-  // then look in local storage and find the user's token
-  // then add it to the header so the server can validate the request
-  var attach = {
-    request: function (object) {
-      var jwt = $window.localStorage.getItem('com.shortly');
-      if (jwt) {
-        object.headers['x-access-token'] = jwt;
-      }
-      object.headers['Allow-Control-Allow-Origin'] = '*';
-      return object;
-    }
-  };
-  return attach;
-})
+
 
 // Custom filter for applying moment.js to our timestamps.
 .filter('moment', function () {
@@ -78,10 +80,8 @@ var app = angular.module('glint', [
   // and send that token to the server to see if it is a real user or hasn't expired
   // if it's not valid, we then redirect back to signin/signup
   $rootScope.$on('$routeChangeStart', function (evt, next, current) {
-        console.log(next.$$route );
-        console.log(Auth.isAuth());
     if (next.$$route && next.$$route.authenticate && !Auth.isAuth()) {
-      $location.path('/signin');
+      $location.path('/login');
     }
   });
 });

@@ -83,7 +83,6 @@ glintServices.factory('Auth', function($http, $window, $location){
     });  };
 
   var isAuth = function () {
-    console.dir($window.localStorage.getItem('com.glint'));
     return !!$window.localStorage.getItem('com.glint');
   };
 
