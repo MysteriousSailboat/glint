@@ -31,12 +31,16 @@ body {
   padding-top: 2px;
 }
 
+.jumbotron { min-height: 500px;}
+
 .jumbo-top {
   padding: 20px 0 !important;
 	text-align: center;
   margin-bottom: 0 !important;
-  background-image: url('../assets/USA-Flag.png');
+  background-image: url('../assets/Capitol-Reflection.jpg');
+  background-position: 50% 22%;
   background-size: cover;
+  border-bottom: 1px solid #555;
 }
 
 .jumbo-top h1 {
@@ -291,5 +295,6 @@ a.glint-logo-icon:link{
 }
 
 .title-text {
-    text-shadow: -1px 0 white, 0 1px white, 1px 0 white, 0 -1px white;
+  color: black !important;
+  text-shadow: -1px 0 #A4A6AB, 0 1px #A4A6AB, 1px 0 #A4A6AB, 0 -1px #A4A6AB;
 }
