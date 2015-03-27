@@ -30,11 +30,16 @@ body {
   border-radius: 25px;
 }
 
-/*.animate-if {
-  background:white;
-  border:1px solid black;
-  padding:10px;
-}*/
+.name-large {
+  color: #001414;
+  font-family: 'Lato', sans-serif !important;
+  font-size: 70px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  margin-bottom: 35px;
+  margin-top: 30px;
+  border-radius: 25px;
+}
 
 .animate-if.ng-enter, .animate-if.ng-leave {
   -webkit-transition:all cubic-bezier(0.250, 0.460, 0.450, 0.940) 1s;
