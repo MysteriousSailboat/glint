@@ -85,7 +85,6 @@ module.exports = {
       text: req.body.text,
       created_by: req.body.username
     };
-    console.log('HERE', req.body);
 
 
     createIdea(newIdea)

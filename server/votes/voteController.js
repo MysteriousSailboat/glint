@@ -14,7 +14,6 @@ module.exports = {
   upvote: function(req, res, next) {
 
     updateVoteCount(req, res, 1, 'up');
-    updateVoteCount(req, res, 1);
 
   },
 
