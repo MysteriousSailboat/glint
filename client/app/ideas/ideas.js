@@ -20,19 +20,22 @@ angular.module('glint.ideas', [])
         results = $filter('orderBy')(results, 'votes', true);
         // Add any new calculations as variables to the existing results using map and extend
         // We have added a way to display either recently upvoted or recently downvoted 
-        
-        results.map(function(result){
-          var good = false;
-          var bad = false
-          if (Date.parse(result.lastUpVoted) - Date.parse(result.lastDownVoted) > 0){
-            good = true;
-          } else {
-            bad = true;
-          }
-          console.log(result);
-          result.displayDollarSign = good;
-          result.displayStockDown = bad;
-        })
+        console.log(results);
+        // results.map(function(result){
+        //   var good = false;
+        //   var bad = false
+        //   if (Date.parse(result.lastUpVoted) - Date.parse(result.lastDownVoted) > 0){
+        //     good = true;
+        //   } else if (Date.parse(result.lastUpVoted) - Date.parse(result.lastDownVoted) < 0) {
+        //     bad = true;
+        //   } else {
+        //     good = false;
+        //     bad = false;
+        //   }
+        //   console.log(result);
+        //   result.displayDollarSign = good;
+        //   result.displayStockDown = bad;
+        // })
 
 
         self.data.ideas = results;

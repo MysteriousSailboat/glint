@@ -33,11 +33,17 @@ glintServices.factory('Ideas', function ($http){
 
 glintServices.factory('Votes', function($http){
 
-  var upvote = function (idea){
+  var upvote = function (path, idea){
+    //Group the data to be unpacked on the server.  
+    //The path is required for searching the database.
+    var groupedData = { 
+      path: path,
+      idea: idea
+    };
     return $http({
       method: 'POST',
       url: '/api/vote/upvote',
-      data: idea
+      data: groupedData
     })
     .then(function (response){
       return response.data;
@@ -47,11 +53,17 @@ glintServices.factory('Votes', function($http){
     });
   };
 
-  var downvote = function (idea){
+  var downvote = function (path, idea){
+    //Group the data to be unpacked on the server.  
+    //The path is required for searching the database.
+    var groupedData = { 
+      path: path,
+      idea: idea
+    };
     return $http({
       method: 'POST',
       url: '/api/vote/downvote',
-      data: idea
+      data: groupedData
     })
     .then(function (response){
       return response.data;
