@@ -11,6 +11,7 @@ module.exports = {
     findUser({username: username})
       .then(function (user) {
         if (!user) {
+          res.status(404).send();
           res.json("user doesn't exist");
         } else {
           return User.methods.comparePasswords(password, user.password, function(err, foundUser){
@@ -18,7 +19,7 @@ module.exports = {
                 var token = jwt.encode(user, 'secret');
                 res.json({token: token, username: username});
               } else {
-                 res.json("wrong password");
+                 res.status(401).send();
               }
           })
         }
@@ -40,7 +41,7 @@ module.exports = {
     findOne({username: username})
       .then(function(user) {
         if (user) {
-          next(new Error('User already exist!'));
+          res.status(401).send() // user already exists
         } else {
           // make a new user if not one
           create = Q.nbind(User.create, User);

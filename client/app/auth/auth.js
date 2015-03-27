@@ -16,13 +16,13 @@ angular.module('glint.auth', [])
     var user = JSON.stringify(self.user);
 
     Auth.signin(user)
-    .then(function (token){
-      console.log(token);
-        $window.localStorage.setItem('com.glint', JSON.stringify(token));
-        $location.path('/');
+    .then(function (res){
+      token = res.data;
+      $window.localStorage.setItem('com.glint', JSON.stringify(token));
+      $location.path('/');
     })
     .catch(function (error){
-      console.error('login error', error);
+      //render error?
     });
   };
 
@@ -33,9 +33,10 @@ angular.module('glint.auth', [])
     var user = JSON.stringify(self.user);
 
     Auth.signup(user)
-    .then(function (token){
-        $window.localStorage.setItem('com.glint', JSON.stringify(token));
-        $location.path('/');
+    .then(function (res){
+      token = res.data;
+      $window.localStorage.setItem('com.glint', JSON.stringify(token));
+      $location.path('/');
     })
     .catch(function (error){
       console.error('signup error', error);

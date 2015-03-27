@@ -75,12 +75,7 @@ glintServices.factory('Auth', function($http, $window, $location){
       url: '/api/signin',
       data: user
     })
-    .then(function (response){
-      return response.data;
-    })
-    .catch(function (error) {
-      console.error('login error', error);
-    });  };
+ };
 
   var isAuth = function () {
     return !!$window.localStorage.getItem('com.glint');
@@ -92,12 +87,7 @@ glintServices.factory('Auth', function($http, $window, $location){
         url: '/api/signup',
         data: user
       })
-      .then(function (response){
-        return response.data;
-      })
-      .catch(function (error) {
-        console.error('signup error', error);
-      });
+
     };
 
     var signout = function () {
