@@ -12,6 +12,7 @@ module.exports = {
 
   // Add one to the vote count for a given idea.
   upvote: function(req, res, next) {
+    console.log(req.body.username)
 
     updateVoteCount(req, res, 1, 'up');
 
