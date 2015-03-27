@@ -83,7 +83,7 @@ module.exports = {
     var newIdea = {
       title: req.body.title,
       text: req.body.text,
-      created_by: req.body.created_by
+      created_by: req.body.username
     };
     console.log('HERE', req.body);
 
