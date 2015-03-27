@@ -4,6 +4,9 @@
     <form class="form-signin" name="signinForm" ng-submit="signinForm.$valid && actrl.signin()" /novalidate>
       <img class="logo-large" src="../../assets/glint-logo-large-teal.png" alt="">
       
+      <div class="loginFailure">Unconstitutional username/password
+      </div>
+
       <label for="inputUsername" class="sr-only">Email address</label>
       <p class="error" ng-show="signinForm.username.$error.required">Required Field</p>
       <input type="text" name="username" ng-model="actrl.user.username" id="inputUsername" class="form-control login-form-input" placeholder="Username" required autofocus>
