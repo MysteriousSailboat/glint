@@ -19,7 +19,7 @@ module.exports = {
           return User.methods.comparePasswords(password, user.password, function(err, foundUser){
             if (foundUser) {
                 var token = jwt.encode(user, 'secret');
-                res.json({token: token, username: username});
+                res.json({token: token, username: username, votes: user.votes});
               } else {
                  res.status(401).send();
               }
@@ -57,7 +57,7 @@ module.exports = {
       .then(function (user) {
         // create token to send back for auth
         var token = jwt.encode(user, 'secret');
-        res.json({token: token, username: username});
+        res.json({token: token, username: username, votes: user.votes});
       })
       .fail(function (error) {
         next(error);

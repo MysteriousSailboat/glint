@@ -5,14 +5,17 @@
 
 angular.module('glint.auth', [])
 
-.controller('AuthCtrl', function(Auth, $scope, $window, $location){ 
+.controller('AuthCtrl', function(Auth, $window, $location){ 
   var self = this;
   self.user = {};
   // for displaying the login error message
   self.loginUsernameFailure = false;
   self.loginPasswordFailure = false;
   self.userNameExists = false;
-
+  
+  self.localAccess = {};
+  self.localAccess.username = localStorage['com.glint'] !== undefined ? JSON.parse(localStorage['com.glint']).username : 'Buy Votes';
+  console.log(self.localAccess);
   // Allow user to declare who they are to the system.
   self.signin = function() {
     self.user.username = self.user.username;
@@ -24,7 +27,7 @@ angular.module('glint.auth', [])
       self.loginUsernameFailure = false;
       self.loginPasswordFailure = false;
       token = res.data;
-      console.log(token)
+
       $window.localStorage.setItem('com.glint', JSON.stringify(token));
       $location.path('/');
     })
@@ -66,8 +69,7 @@ angular.module('glint.auth', [])
   };
 
   self.signout = function() {
-    Auth.signout()
+    Auth.signout();
   };
-
 
 });
