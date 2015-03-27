@@ -11,7 +11,6 @@ angular.module('glint.auth', [])
   // for displaying the login error message
   $scope.loginUsernameFailure = false;
   $scope.loginPasswordFailure = false;
-  $scope.loginFailure = false;
 
   // Allow user to declare who they are to the system.
   self.signin = function() {
@@ -33,11 +32,9 @@ angular.module('glint.auth', [])
       console.log(error);
       if (error.status === 401) {
         $scope.loginPasswordFailure = true;
-        $scope.loginFailure = true;
       }
       if (error.status === 404) {
         $scope.loginUsernameFailure = true;
-        $loginFailure = true;
       }
     });
   };
