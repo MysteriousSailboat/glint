@@ -8,6 +8,8 @@ angular.module('glint.auth', [])
 .controller('AuthCtrl', function(Auth, $window, $location){ 
   var self = this;
   self.user = {};
+  // for displaying the login error message
+  self.loginFailure = false;
 
   // Allow user to declare who they are to the system.
   self.signin = function() {
