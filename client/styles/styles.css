@@ -370,15 +370,31 @@ a.glint-logo-icon:link{
 }
 
 .upvote {
+  vertical-align: top;
   background-color: red !important;
-  width : 10px;
+  width : 15px;
   display: inline-block;
   margin: 0 auto;
+
+}
+.voting-bars{
+  width : 20px;
+  height: 20px;
+  display : inline-block;
+  margin : 0 auto;
 }
 
 .downvote {
+  vertical-align: top;
   background-color: blue !important;
-  width : 10px;
-  display: inline-block;
-  margin: 0 auto; 
+  width : 15px;
+  display : inline-block;
+  margin : 0 auto; 
+}
+.icon-bars {
+  margin : 0 auto;
+  display : inline-block;
+  vertical-align : top;
+  height : 30px;
+  width : 30px;
 }

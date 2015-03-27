@@ -44,10 +44,14 @@
           <p class="timestamp-author">Submitted {{ idea.created_at | moment }} by {{ idea.created_by }}</p>
         </div>
       </div>
-      <div class="col-md-1 ">
-        <div class="upvote " ng-style="idea.upVoteSize"></div>
-        <div class="downvote " ng-style="idea.downVoteSize"></div>
+      <div class="col-md-1">
    
+      </div>
+      <div class="col-md-2">
+        <img class="icon-bars" src="../../assets/dollarSign.jpeg"><div class="upvote" ng-style="idea.upVoteSize"></div></img>
+        <div class="voting-bars "></div>
+        <img class="icon-bars" src="../../assets/stockDown.png"><div class="downvote" ng-style="idea.downVoteSize"></div></img>
+
       </div>
     </div>
 
