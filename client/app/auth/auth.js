@@ -5,33 +5,47 @@
 
 angular.module('glint.auth', [])
 
-.controller('AuthCtrl', function(Auth){
+.controller('AuthCtrl', function(Auth, $window, $location){ 
   var self = this;
   self.user = {};
 
   // Allow user to declare who they are to the system.
-  self.login = function() {
-    self.user.username = _.escape(self.user.username);
-    self.user.password = _.escape(self.user.password);
+  self.signin = function() {
+    self.user.username = self.user.username;
+    self.user.password = self.user.password;
     var user = JSON.stringify(self.user);
 
-    Auth.login(user)
-      .then(function (response){})
-      .catch(function (error){
-        console.error('login error', error);
-      });
+    Auth.signin(user)
+    .then(function (res){
+      token = res.data;
+      $window.localStorage.setItem('com.glint', JSON.stringify(token));
+      $location.path('/');
+    })
+    .catch(function (error){
+      //render error?
+    });
   };
 
   // Allow user to first-time identify themselves to the system.
   self.signup = function() {
-    self.user.username = _.escape(self.user.username);
-    self.user.password = _.escape(self.user.password);
+    self.user.username = self.user.username;
+    self.user.password = self.user.password;
     var user = JSON.stringify(self.user);
 
     Auth.signup(user)
-      .then(function (response){})
-      .catch(function (error){
-        console.error('signup error', error);
-      });
+    .then(function (res){
+      token = res.data;
+      $window.localStorage.setItem('com.glint', JSON.stringify(token));
+      $location.path('/');
+    })
+    .catch(function (error){
+      console.error('signup error', error);
+    });
   };
+
+  self.signout = function() {
+    Auth.signout()
+  };
+
+
 });

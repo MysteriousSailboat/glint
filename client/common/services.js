@@ -67,43 +67,45 @@ glintServices.factory('Votes', function($http){
   };
 });
 
-glintServices.factory('Auth', function($http){
+glintServices.factory('Auth', function($http, $window, $location){
 
-  var login = function (user){
+  var signin = function (user){
     return $http({
       method: 'POST',
       url: '/api/signin',
       data: user
     })
-    .then(function (response){
-      return response.data;
-    })
-    .catch(function (error) {
-      console.error('login error', error);
-    });  };
+ };
 
-  var signup = function (user){
-    return $http({
-      method: 'POST',
-      url: '/api/signup',
-      data: user
-    })
-    .then(function (response){
-      return response.data;
-    })
-    .catch(function (error) {
-      console.error('signup error', error);
+  var isAuth = function () {
+    return !!$window.localStorage.getItem('com.glint');
+  };
+
+    var signup = function (user){
+      return $http({
+        method: 'POST',
+        url: '/api/signup',
+        data: user
+      })
+
+    };
+
+    var signout = function () {
+    $window.localStorage.removeItem('com.glint');
+    $location.path('/#/login');
+    };
+
+
+      return {
+        signin: signin,
+        signup: signup,
+        signout: signout,
+        isAuth: isAuth
+      };
     });
-  };
-
-  return {
-    login: login,
-    signup: signup
-  };
-});
 
 glintServices.factory('Comments', function ($http){
-  
+
   var createComment = function (comment){
     return $http({
       method: 'POST',
