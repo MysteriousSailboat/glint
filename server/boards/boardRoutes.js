@@ -17,4 +17,7 @@ module.exports = function (app) {
     app.route('/ideas')
       .get(auth.checkAuth, boardController.boardIdeas)
       .post(auth.checkAuth, boardController.addIdea);
+
+    app.route('/plusView')
+      .post(boardController.incrViewCnt);
 };

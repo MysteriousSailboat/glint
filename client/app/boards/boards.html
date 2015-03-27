@@ -1,6 +1,6 @@
 <div ng-controller="BoardsCtrl as bctrl">
   <div class="jumbotron jumbo-top">
-    <h1 class="animated fadeInUp">Freedom isn't free</h1>
+    <h1 class="animated fadeInUp title-text">Freedom isn't free</h1>
     <form class="navbar-form navbar-middle" ng-submit="bctrl.submitBoard()">
 
       <!-- Enter Board -->
@@ -29,10 +29,8 @@
 
     <div class="idea-container">
       <div class="col-md-1 upvote-downvote-wrapper" ng-controller="VotesCtrl as vctrl">
-        <i class="fa fa-sort-asc" ng-click="vctrl.upvote(idea)"></i> <!-- upvote -->
-        <div class="vote-points">{{ board.votes }}</div>
-        <i class="fa fa-sort-desc" ng-click="vctrl.downvote(idea)"></i> 
-        <!-- downvote -->
+        <div>Views:</div>
+        <div class="vote-points">{{ board.views }}</div>
       </div>
       <div class="col-md-8">
         <div class="idea-wrapper">
@@ -43,8 +41,8 @@
       </div>
       <div class="col-md-1 ">
         <div class="comments-wrapper">
-          <i class="fa fa-comments"></i>
-          <p class="comments-amount">532</p>
+          <i class="fa fa-lightbulb-o"></i>
+          <p class="comments-amount">{{ board.ideas.length }}</p>
         </div>
       </div>
     </div>

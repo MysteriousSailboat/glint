@@ -103,6 +103,23 @@ module.exports = {
       .fail(function(error) {
         next(error);
       });
+  },
+
+  incrViewCnt: function (req, res, next){
+    var findBoard = Q.nbind(Board.find, Board);
+    var boardName = req.body.boardName;
+    
+    findBoard({ boardName: boardName })
+      .then(function(board) {
+        board[0].views++;
+        return board;
+      })
+      .then(function(incrBoard){
+        incrBoard[0].save();
+      })
+      .fail(function(error) {
+        next(error);
+      });
   }
 
 };
