@@ -12,7 +12,9 @@ module.exports = {
 
   // Add one to the vote count for a given idea.
   upvote: function(req, res, next) {
+
     updateVoteCount(req, res, 1, 'up');
+
   },
 
   // Subtract one from the vote count for a given idea.
@@ -59,3 +61,7 @@ var updateVoteCount = function(req, res, changeValue, direction) {
     });  
     
 };
+
+// var updateUser = function(req, res, changeValue) {
+//     var
+// }

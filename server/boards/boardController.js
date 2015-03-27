@@ -37,12 +37,14 @@ module.exports = {
     var newBoard = {
       boardName: req.body.boardName,
       caption: req.body.caption,
+      created_by: req.body.username,
       ideas: []
     };
 
     createBoard(newBoard)
       .then(function (createdBoard) {
         if (createdBoard) {
+            console.log(createdBoard);
             res.json(createdBoard);
         }
       })
@@ -80,8 +82,10 @@ module.exports = {
     // Create a new document from the Idea model. If successfully created then the new Idea document is returned.
     var newIdea = {
       title: req.body.title,
-      text: req.body.text
+      text: req.body.text,
+      created_by: req.body.username
     };
+
 
     createIdea(newIdea)
       .then(function (createdIdea) {
