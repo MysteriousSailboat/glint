@@ -3,7 +3,9 @@
 
 angular.module('glint.votes', [])
 
-.controller('VotesCtrl', function (Votes, $location, $window){
+
+.controller('VotesCtrl', function (Votes, localAccess, $location, $window){
+
   var self = this;
 
   self.noVotes = true;
@@ -19,6 +21,7 @@ angular.module('glint.votes', [])
     .then(function (response){
         if (response){
           ideaRef.votes++;
+          localAccess.setVotes(localAccess.getVotes() - 1);
         } 
       })
     .catch(function (error){
@@ -38,6 +41,7 @@ angular.module('glint.votes', [])
     .then(function (response){
         if (response){
           ideaRef.votes--;
+          localAccess.setVotes(localAccess.getVotes() - 1);
         } 
       })
     .catch(function (error){

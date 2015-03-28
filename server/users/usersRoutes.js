@@ -10,5 +10,6 @@ module.exports = function (app) {
   app.post('/signin', userController.signin);
   app.post('/signup', userController.signup);
   app.get('/signedin', userController.checkAuth);
+  app.post('/votes', userController.modifyVotes)
   // app.post('/logout', userController.logout);
 };

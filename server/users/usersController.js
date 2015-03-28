@@ -3,6 +3,26 @@ var User = require('./usersModel.js'),
     jwt  = require('jwt-simple');
 
 module.exports = {
+
+  modifyVotes : function (req, res, next) {
+
+    var username = req.body.user;
+    var votes = req.body.votes;
+
+    var updateUser = Q.nbind(User.update, User);
+    
+    updateUser( {username: username}, {$inc : {votes: votes}} )
+      .then(function (user) {
+        // if (user.votes > 0) {
+        //   user.votes = user.votes + modifier;
+        //   user.save(function(err){
+        //   })
+        // } else {
+          // no votes
+          res.status(401).send();
+        })
+  },
+
   signin: function (req, res, next) {
     var username = req.body.username,
         password = req.body.password;
