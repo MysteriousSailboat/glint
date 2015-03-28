@@ -20,10 +20,11 @@ module.exports = {
     findUser( {username: req.body.username} )
     .then(function (user) {
       if (user.votes > 0) {
-        user.votes -= 1;
-        user.save(function(err){
+        var newVotes = user.votes - 1;
+
+        User.update({username: user.username}, {$set: {votes: newVotes}}, function(err){
           updateVoteCount(req, res, 1, 'up');
-        })
+        });
       } else {
           // no votes
           res.status(401).send();
@@ -37,14 +38,15 @@ module.exports = {
     findUser( {username: req.body.username} )
     .then(function (user) {
       if (user.votes > 0) {
-        user.votes -= 1;
-        user.save(function(err){
+        var newVotes = user.votes - 1;
+
+        User.update({username: user.username}, {$set: {votes: newVotes}}, function(err){
           updateVoteCount(req, res, -1, 'down');
-        })
+        });
       } else {
-          res.status(401).send()
-        } 
-      })
+        res.status(401).send()
+      } 
+    })
   }
 };
 

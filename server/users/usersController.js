@@ -8,8 +8,10 @@ module.exports = {
         password = req.body.password;
 
     var findUser = Q.nbind(User.findOne, User);
+    console.log(password);
     findUser({username: username})
       .then(function (user) {
+        console.log(user);
         if (!user) {
           res.status(404).send();
           res.json("user doesn't exist");

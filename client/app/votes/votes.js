@@ -3,8 +3,10 @@
 
 angular.module('glint.votes', [])
 
-.controller('VotesCtrl', function (Votes, $location){
+.controller('VotesCtrl', function (Votes, $location, $window){
   var self = this;
+
+  self.noVotes = true;
 
   // Display the user's upvotes and pass them along to the db.
   self.upvote = function(idea){
@@ -20,8 +22,9 @@ angular.module('glint.votes', [])
         } 
       })
     .catch(function (error){
+      $window.alert('Buy more votes!');
       console.error('upvote error', error);
-      //display something
+        
     });
   };
 
@@ -38,8 +41,10 @@ angular.module('glint.votes', [])
         } 
       })
     .catch(function (error){
+      
       console.error('downvote error', error);
       //display something
+      
     });
   };
 });
