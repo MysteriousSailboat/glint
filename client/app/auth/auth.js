@@ -5,13 +5,33 @@
 
 angular.module('glint.auth', [])
 
-.controller('AuthCtrl', function(Auth, $scope, $window, $location){ 
+.controller('AuthCtrl', function(Auth, Votes, localAccess, $window, $location, $interval, $scope){ 
   var self = this;
   self.user = {};
   // for displaying the login error message
   self.loginUsernameFailure = false;
   self.loginPasswordFailure = false;
   self.userNameExists = false;
+  $scope.localVars = {};
+
+  $interval(function(){
+    $scope.localVars.username = localAccess.getUser();
+    $scope.localVars.votes = localAccess.getVotes();
+  }, 1000)
+
+  $scope.localVars.username = localStorage['com.glint'] !== undefined ? JSON.parse(localStorage['com.glint']).username + ' has ' : 'Buy votes, ';
+  $scope.localVars.votes = localStorage['com.glint'] !== undefined ? JSON.parse(localStorage['com.glint']).votes: 'change the world';
+  
+  console.log(typeof $scope.localVars.votes);
+  localAccess.setUser($scope.localVars.username);
+  localAccess.setVotes($scope.localVars.votes);
+  console.log(localAccess._votes);
+  
+  self.buyVotes = function(){
+    localAccess.setVotes(localAccess.getVotes() + 100);
+    // Votes.addVotes($scope.localVars.username, 100)
+  };
+
 
   // Allow user to declare who they are to the system.
   self.signin = function() {
@@ -24,9 +44,11 @@ angular.module('glint.auth', [])
       self.loginUsernameFailure = false;
       self.loginPasswordFailure = false;
       token = res.data;
-      console.log(token)
+
+
       $window.localStorage.setItem('com.glint', JSON.stringify(token));
       $location.path('/');
+      self.updateLocal();
     })
     .catch(function (error){
       //render error happens in Auth.signin service
@@ -58,6 +80,7 @@ angular.module('glint.auth', [])
       console.log(token);
       $window.localStorage.setItem('com.glint', JSON.stringify(token));
       $location.path('/');
+      self.updateLocal;
     })
     .catch(function (error){
       console.error('signup error', error);
@@ -66,8 +89,8 @@ angular.module('glint.auth', [])
   };
 
   self.signout = function() {
-    Auth.signout()
+    Auth.signout();
+    self.updateLocal;
   };
-
 
 });
