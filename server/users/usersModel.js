@@ -20,7 +20,7 @@ var UserSchema = new mongoose.Schema({
 
   votes: {
     type: Number,
-    default: 5
+    default: 100
   }
 });
 
