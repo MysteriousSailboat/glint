@@ -1,5 +1,33 @@
 var glintServices = angular.module('glint.services', []);
 
+glintServices.factory('localAccess', function () {
+  var _username = '';
+  var _votes = 0;
+
+  var setUser = function(user) {
+    this._username = user;
+  };
+
+  var setVotes = function(newVal) {
+    this._votes = newVal;
+  };
+
+  var getUser = function() {
+    return this._username;
+  };
+
+  var getVotes = function() {
+    return this._votes;
+  }
+
+  return {
+    setUser: setUser,
+    getUser: getUser,
+    setVotes: setVotes,
+    getVotes: getVotes
+  }
+});
+
 glintServices.factory('Ideas', function ($http){
 
   var getIdeas = function (path){
@@ -71,6 +99,20 @@ glintServices.factory('Votes', function($http){
     .catch(function (error) {
       console.error('downvote error', error);
     });
+  };
+
+  var addVotes = function (user, amount) {
+    return $http({
+      method: 'POST',
+      url: '/api/votes',
+      data: {user: user, votes: amount}
+    })
+    .then(function (response) {
+      return response.data;
+    })
+    .catch(function (error){
+      console.error('Buy Votes error', error);
+    })
   };
 
   return {

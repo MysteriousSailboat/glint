@@ -84,4 +84,4 @@ var app = angular.module('glint', [
       $location.path('/login');
     }
   });
-});
+})
