@@ -24,6 +24,7 @@ angular.module('glint.auth', [])
       self.loginUsernameFailure = false;
       self.loginPasswordFailure = false;
       token = res.data;
+      console.log(token)
       $window.localStorage.setItem('com.glint', JSON.stringify(token));
       $location.path('/');
     })
@@ -54,6 +55,7 @@ angular.module('glint.auth', [])
     .then(function (res){
       self.userNameExists = false;
       token = res.data;
+      console.log(token);
       $window.localStorage.setItem('com.glint', JSON.stringify(token));
       $location.path('/');
     })
