@@ -1,6 +1,5 @@
 // Idea Routes
 // -----------
-//
 // The Idea routes further routes any requests to /api/ideas in the middleware to specific Idea methods defined in the Idea controller.
 
 var ideaController = require('./ideaController.js');
